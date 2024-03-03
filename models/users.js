@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+    first_name: { type: String, required: true },
+    last_name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    phoneNumber: { type: String },
+    phone_number: { type: String },
     address: { type: String },
     city: { type: String },
     createdAt: { type: Date, default: Date.now },
