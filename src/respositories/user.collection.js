@@ -16,11 +16,11 @@ async function insertDataSignUp(request) {
     });
     delete newUser._doc.password;
     return newUser;
-  } catch (err) {
-    if (err.code === 11000) {
+  } catch (error) {
+    if (error.code === 11000) {
       throw new ApiError("This email is already used!", 400);
     }
-    throw new ApiError("Error creating user", 500);
+    throw new ApiError(error.message, error.status);
   }
 }
 

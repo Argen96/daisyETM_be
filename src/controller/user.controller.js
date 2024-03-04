@@ -3,7 +3,6 @@ import ApiError from "../error/apiError.js";
 import { insertDataSignUp, verifyDataLogIn } from '../respositories/user.collection.js';
 async function signUp(request) {
     const error = validationResult(request)
-    console.log(error)
     if (!error.isEmpty()) {
       error.array().forEach(err => {
         throw new ApiError(err.msg, 400)

@@ -1,10 +1,27 @@
 import { validationResult } from 'express-validator'
 import ApiError from "../error/apiError.js";
-import { addInvoiceDb } from '../respositories/invoice.collection.js';
+import { addInvoiceDb,  getInvoicesDb, removeInvoiceDb } from '../respositories/invoice.collection.js';
 
 async function addInvoice(request) {
+    const error = validationResult(request)
+    if (!error.isEmpty()) {
+        error.array().forEach(err => {
+          throw new ApiError(err.msg, 400)
+        })
+      }
     const result = await addInvoiceDb(request);
     return result;
 }
 
-export { addInvoice }
+async function showInvoices(request) {
+    const result = await getInvoicesDb(request);
+    return result;
+}
+
+async function removeInvoice(request) {
+    const result = await removeInvoiceDb(request);
+    return result;
+}
+
+
+export { addInvoice, showInvoices, removeInvoice }

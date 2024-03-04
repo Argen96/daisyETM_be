@@ -6,9 +6,14 @@ import {
   signUpValidator,
   logInValidator,
 } from "./src/validation/validation.users.js";
+import { validateInvoice  } from "./src/validation/validation.invoices.js";
 import { signUp, logIn } from "./src/controller/user.controller.js";
 import auth from "./src/middlewares/auth.js";
-import { addInvoice } from "./src/controller/invoice.controller.js";
+import {
+  addInvoice,
+  showInvoices,
+  removeInvoice,
+} from "./src/controller/invoice.controller.js";
 
 const port = 80;
 const app = express();
@@ -21,7 +26,7 @@ app.post(
   asyncHandler(async (request, response) => {
     const newUser = await signUp(request);
     response.status(200);
-    response.json( newUser );
+    response.json(newUser);
   })
 );
 
@@ -31,29 +36,38 @@ app.post(
   asyncHandler(async (request, response) => {
     const user = await logIn(request);
     response.status(200);
-    response.json( user );
+    response.json(user);
   })
 );
 app.post(
-  "/api/add-invoice", auth,
+  "/api/add-invoice",
+  auth,validateInvoice,
   asyncHandler(async (request, response) => {
     const newInvoice = await addInvoice(request);
     response.status(200);
-    response.json( newInvoice );
+    response.json(newInvoice);
   })
 );
 
-// app.get("/api/invoices", auth, asyncHandler (async (request, response) => {
-//   const result = await showInvoices(request);
-//   response.status(200);
-//   response.json(result);
-// }));
+app.get(
+  "/api/invoices",
+  auth,
+  asyncHandler(async (request, response) => {
+    const result = await showInvoices(request);
+    response.status(200);
+    response.json(result);
+  })
+);
 
-// app.delete("/api/tasks/:id", auth, asyncHandler ( async (request, response) => {
-//   const result = await removeInvoice(request);
-//   response.status(200);
-//   response.json({ message: result });
-// }));
+app.delete(
+  "/api/tasks/:id",
+  auth,
+  asyncHandler(async (request, response) => {
+    const result = await removeInvoice(request);
+    response.status(200);
+    response.json({ message: result });
+  })
+);
 
 app.use(errorHandler);
 
