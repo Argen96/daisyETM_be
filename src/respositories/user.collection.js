@@ -42,7 +42,7 @@ async function verifyDataLogIn(request) {
     );
     user.token = token;
     delete user._doc.password;
-    return user._doc;
+    return { ...user._doc, token };
   } catch (error) {
     throw new ApiError(error.message, error.status);
   }
