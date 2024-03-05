@@ -22,5 +22,6 @@ async function signUp(request) {
     const result = await verifyDataLogIn(request);
     return result;
   }
+ 
 
 export { signUp, logIn }

@@ -1,6 +1,6 @@
 import { validationResult } from 'express-validator'
 import ApiError from "../error/apiError.js";
-import { addInvoiceDb,  getInvoicesDb, removeInvoiceDb } from '../respositories/invoice.collection.js';
+import { addInvoiceDb,  getInvoicesDb, removeInvoiceDb, updateInvoiceDb } from '../respositories/invoice.collection.js';
 
 async function addInvoice(request) {
     const error = validationResult(request)
@@ -23,5 +23,14 @@ async function removeInvoice(request) {
     return result;
 }
 
-
-export { addInvoice, showInvoices, removeInvoice }
+async function  updateInvoice(request) {
+  const error = validationResult(request)
+    if (!error.isEmpty()) {
+        error.array().forEach(err => {
+          throw new ApiError(err.msg, 400)
+        })
+      }
+    const result = await updateInvoiceDb(request);
+    return result;
+}
+export { addInvoice, showInvoices, removeInvoice, updateInvoice }

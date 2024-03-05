@@ -37,4 +37,22 @@ async function removeInvoiceDb(request) {
     }
 }
 
-export { addInvoiceDb, getInvoicesDb, removeInvoiceDb }
+async function updateInvoiceDb(request) {
+    try {
+        await connect();
+        const newData = request.body
+        const idInvoice = request.params.id;
+        const user_id = request.user.userId;
+        const updatedInvoice = await Invoice.findOneAndUpdate(
+            { _id: idInvoice, user_id },
+            newData,
+            { new: true }
+        );
+     if (!updatedInvoice) throw new ApiError("Invoice not found", 404);
+        return updatedInvoice;
+    } catch (error) {
+        throw new ApiError(error.message, error.status);
+    }
+}
+
+export { addInvoiceDb, getInvoicesDb, removeInvoiceDb, updateInvoiceDb }

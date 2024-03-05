@@ -13,6 +13,7 @@ import {
   addInvoice,
   showInvoices,
   removeInvoice,
+  updateInvoice
 } from "./src/controller/invoice.controller.js";
 
 const port = 80;
@@ -60,10 +61,20 @@ app.get(
 );
 
 app.delete(
-  "/api/tasks/:id",
+  "/api/invoice/:id",
   auth,
   asyncHandler(async (request, response) => {
     const result = await removeInvoice(request);
+    response.status(200);
+    response.json({ message: result });
+  })
+);
+
+app.put(
+  "/api/invoice/:id",
+  auth,validateInvoice,
+  asyncHandler(async (request, response) => {
+    const result = await updateInvoice(request);
     response.status(200);
     response.json({ message: result });
   })
