@@ -1,6 +1,7 @@
 import { connect } from "../../db.js";
 import { Invoice } from "../../models/invoices.js";
 import ApiError from "../error/apiError.js";
+import { formatDate, totalValues } from "../services/invoice.services.js";
 
 async function addInvoiceDb(request) {
     try {
@@ -17,8 +18,13 @@ async function getInvoicesDb(request) {
     try {
         await connect();
         const user_id = request.user.userId;
-        const invoices = await Invoice.find({ user_id });
-        return invoices;
+        let invoices = await Invoice.find({ user_id });
+        invoices = await formatDate(invoices) 
+        const allInvoices = {
+            invoices: invoices,
+            totalValues : await totalValues(invoices)
+        }
+        return allInvoices;
     } catch (error) {
         throw new ApiError(error.message, error.status);
     }
