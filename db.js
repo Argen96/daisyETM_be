@@ -3,8 +3,10 @@ import mongoose from "mongoose";
 const connect = async () => {
   try {
     const connection = await mongoose.connect(
-      "mongodb://mongo:27017/docker-db"
-    );
+      "mongodb://localhost:27017/mongo-db", {
+          family: 4 
+      
+      });
     if (connection)
       console.log("\x1b[32m%s\x1b[0m", "Database Connected Successfully...");
   } catch (err) {
@@ -13,4 +15,4 @@ const connect = async () => {
   }
 };
 
-export { connect }
+export { connect };

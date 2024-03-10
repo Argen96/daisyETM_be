@@ -7,9 +7,7 @@
   "author": "Argen96 <106479453+Argen96@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "start:development": "nodemon --inspect=0.0.0.0:9229 -L -r envk index.js",
-    "start:production": "nodemon --inspect=0.0.0.0:9229 -L -r envk index.js",
-    "start": "yarn start:${NODE_ENV:-development}"
+    "start": "node ./index.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

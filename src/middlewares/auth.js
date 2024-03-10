@@ -26,7 +26,7 @@ const verifyToken = (req, res, next) => {
       .json({ message: "A token is required for authentication" });
   }
 
-  jwt.verify(token, config.TOKEN_KEY, (err, decoded) => {
+  jwt.verify(token, 'token_value', (err, decoded) => {
     if (err) {
       return catchError(err, res);
     }

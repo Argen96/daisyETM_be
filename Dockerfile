@@ -1,14 +1,14 @@
 FROM node:latest
 
-WORKDIR /usr/src/app
+# WORKDIR /usr/src/app
 
-COPY package*.json ./
+# COPY package*.json ./
 
-RUN yarn install
+# RUN yarn install
 
-COPY . .
+# COPY . .
 
-EXPOSE 80
+# EXPOSE 80
 
-CMD [ "yarn", "start" ]
+# CMD [ "yarn", "start" ]
 

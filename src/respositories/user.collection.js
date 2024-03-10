@@ -37,7 +37,7 @@ async function verifyDataLogIn(request) {
     if (!isValidPass) throw new ApiError(`Invalid credentials!`, 401);
     const token = jwt.sign(
       { email: user.email, userId: user._id },
-      process.env.TOKEN_KEY,
+      'token_value',
       { expiresIn: "1d" }
     );
     user.token = token;
